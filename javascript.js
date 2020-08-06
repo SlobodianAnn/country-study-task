@@ -32,8 +32,8 @@
   }
   
   let arrayCities = ["Sant Julià de Lòria","Pas de la Casa","Ordino", "Ras al-Khaimah"];
-  let testArray = new ObjectCities(arrayCities);
-  console.log(testArray);
+  let citiesObj = new ObjectCities(arrayCities);
+  console.log(citiesObj); // вывод массив городов-объектов 
   
   function ObjectCountry(idCountry){
       for(let key in country){
@@ -67,7 +67,7 @@
   let objAE = new ObjectCountry('AE');
   let objAF = new ObjectCountry('AF');
   objAF.getCities();
-  console.log(objAE);
+  console.log(objAE);// вывод объекта страны 
   
   })()
   
