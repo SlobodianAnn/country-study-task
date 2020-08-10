@@ -1,13 +1,13 @@
 
 
 (async () => {
-    let urlCountry = 'http://localhost/mapTask/countries.json';
-    let urlCity = 'http://localhost/mapTask/cities.json';
-    let response = await fetch(urlCountry);
-    let response1 = await fetch(urlCity);
+    const urlCountry = 'http://localhost/mapTask/countries.json';
+    const urlCity = 'http://localhost/mapTask/cities.json';
+    const countryResponse = await fetch(urlCountry);
+    const citiesResponse = await fetch(urlCity);
           
-    let country = await response.json(); 
-    let cities = await response1.json();
+    const countries = await countryResponse.json(); 
+    const cities = await citiesResponse.json();
   
     function ObjectCities(array){
       let arrayObjCities = [];
@@ -22,7 +22,7 @@
                           lng : cities[key].lng, 
                       },
                       getGeoPosition : () => _geoPoisition,
-                      getCountry: new ObjectCountry(cities[key].country),
+                      getCountry: new ObjectCountry(cities[key].countries),
                   }
                  arrayObjCities.push(obj);
              }
@@ -36,24 +36,24 @@
   console.log(citiesObj); // вывод массив городов-объектов 
   
   function ObjectCountry(idCountry){
-      for(let key in country){
+      for(let key in countries){
           if(idCountry == key){
-              this._name = country[key].name;
+              this._name = countries[key].name;
               this.getName = () => this._name;
-              this._native = country[key].native;
+              this._native = countries[key].native;
               this.getNative = () => this._native;
-              this._phone = country[key].phone;
+              this._phone = countries[key].phone;
               this.getPhone = () => this._phone;
-              this._capital = country[key].capital;
+              this._capital = countries[key].capital;
               this.getCapital = () => this._capital
-              this._currency = country[key].currency;
+              this._currency = countries[key].currency;
               this.getCurrency = () => this._currency;
-              this._langs = country[key].languages;
+              this._langs = countries[key].languages;
               this.getLangs = () => this._langs;
               this.getCities = function(){
                   let arr = [];
                   for(let key in cities){
-                      if (idCountry == cities[key].country){
+                      if (idCountry == cities[key].countries){
                           arr.push(cities[key].name)
                       } 
                   }
@@ -64,8 +64,8 @@
       }
   }
       
-  let objAE = new ObjectCountry('AE');
-  let objAF = new ObjectCountry('AF');
+  const objAE = new ObjectCountry('AE');
+  const objAF = new ObjectCountry('AF');
   objAF.getCities();
   console.log(objAE);// вывод объекта страны 
   
