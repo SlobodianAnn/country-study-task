@@ -1,77 +1,69 @@
-(async () => {
-    const urlCountry = 'http://localhost/mapTask/countries.json';
-    const urlCity = 'http://localhost/mapTask/cities.json';
-    const countryResponse = await fetch(urlCountry);
-    const citiesResponse = await fetch(urlCity);
+ (async () => {
+    let urlCountry = 'http://localhost/mapTask/countries.json';
+    let urlCity = 'http://localhost/mapTask/cities.json';
+    let countryResponse  = await fetch(urlCountry);
+    let citiesResponse = await fetch(urlCity);
           
-    const countries = await countryResponse.json(); 
-    const cities = await citiesResponse.json();
+    let country = await countryResponse.json(); 
+    let cities = await citiesResponse.json();
   
-    function ObjectCities(array){
-      let arrayObjCities = [];
-      for (let i = 0; i < array.length; i++){
-         for(let key in cities){
-             if(array[i] == cities[key].name){
-                  let obj = {
-                      name : cities[key].name,
-                      getName : () => _name,
-                       geoPoisition : {
-                          lat : cities[key].lat,
-                          lng : cities[key].lng, 
-                      },
-                      getGeoPosition : () => _geoPoisition,
-                      getCountry: new ObjectCountry(cities[key].countries),
-                  }
-                 arrayObjCities.push(obj);
-             }
-         }
+    class ObjectCountry {
+      constructor(idCountry){
+          for(let key in country){
+              if(idCountry == key){
+                  this._name = country[key].name;
+                  this._native = country[key].native;
+                  this._phone = country[key].phone;
+                  this._capital = country[key].capital;
+                  this._currency = country[key].currency;
+                  this._langs = country[key].languages;
+                  this._cities = this.getCities(idCountry);
+              }
+          }
       }
-      return arrayObjCities;
-  }
+      getName(){return this._name}
+      getNative(){return this._native} 
+      getPhone(){return this._phone} 
+      getCapital(){return this._capital} 
+      getCurrency(){return this._currency}
+      getLangs(){return this._langs}
+      getCities(idCountry){
+          let objectsСityArray = cities.filter((el) => (idCountry === el.country));
+          let citiesArray = objectsСityArray.map((el) => el.name);
+          return citiesArray;
+      }}
+  
+      class ObjectCities{
+          constructor(array){
+              let arrayObjCities = array.map(function(el, index, array){
+                  for(let key in cities){
+                      if(el == cities[key].name){
+                          let obj = {
+                              name : cities[key].name,
+                              getName : function(){return this.name},
+                              geoPoisition : {
+                                  lat : cities[key].lat,
+                                  lng : cities[key].lng, 
+                              },
+                              getGeoPosition: function(){this.geoPoisition},
+                              getCountry: new ObjectCountry(cities[key].country),
+                          }
+                      return obj;
+                      } 
+                  }
+              })
+          return arrayObjCities;
+          }
+      }
   
   let arrayCities = ["Sant Julià de Lòria","Pas de la Casa","Ordino", "Ras al-Khaimah"];
   let citiesObj = new ObjectCities(arrayCities);
-  console.log(citiesObj); // вывод массив городов-объектов 
+  console.log(citiesObj); ;// вывод массив городов-объектов 
   
-  function ObjectCountry(idCountry){
-      for(let key in countries){
-          if(idCountry == key){
-              this._name = countries[key].name;
-              this.getName = () => this._name;
-              this._native = countries[key].native;
-              this.getNative = () => this._native;
-              this._phone = countries[key].phone;
-              this.getPhone = () => this._phone;
-              this._capital = countries[key].capital;
-              this.getCapital = () => this._capital
-              this._currency = countries[key].currency;
-              this.getCurrency = () => this._currency;
-              this._langs = countries[key].languages;
-              this.getLangs = () => this._langs;
-              this.getCities = function(){
-                  let arr = [];
-                  for(let key in cities){
-                      if (idCountry == cities[key].countries){
-                          arr.push(cities[key].name)
-                      } 
-                  }
-                  return arr;
-              };
-              this._cities = this.getCities();
-          }
-      }
-  }
-      
-  const objAE = new ObjectCountry('AE');
-  const objAF = new ObjectCountry('AF');
-  objAF.getCities();
-  console.log(objAE);// вывод объекта страны 
+  let objAE = new ObjectCountry('AE');
+  let objAF = new ObjectCountry('AF');
+  let check = objAF.getCities('AD');
+  
+  console.log(objAE);// вывод объекта страны  
   
   })()
-  
-          
-  
-  
-  
-  
-  
