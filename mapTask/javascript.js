@@ -1,5 +1,3 @@
-
-
 (async () => {
     const urlCountry = 'http://localhost/mapTask/countries.json';
     const urlCity = 'http://localhost/mapTask/cities.json';
