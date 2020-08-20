@@ -38,17 +38,16 @@
               let arrayObjCities = array.map(function(el, index, array){
                   for(let key in cities){
                       if(el == cities[key].name){
-                          let obj = {
+                          return {
                               name : cities[key].name,
                               getName : function(){return this.name},
                               geoPoisition : {
                                   lat : cities[key].lat,
                                   lng : cities[key].lng, 
                               },
-                              getGeoPosition: function(){this.geoPoisition},
+                              getGeoPosition : function(){return this.geoPoisition},
                               getCountry: new ObjectCountry(cities[key].country),
                           }
-                      return obj;
                       } 
                   }
               })
@@ -58,7 +57,8 @@
   
   let arrayCities = ["Sant Julià de Lòria","Pas de la Casa","Ordino", "Ras al-Khaimah"];
   let citiesObj = new ObjectCities(arrayCities);
-  console.log(citiesObj); ;// вывод массив городов-объектов 
+  console.log(citiesObj); 
+  console.log(citiesObj[0].getGeoPosition()) // вывод массив городов-объектов 
   
   let objAE = new ObjectCountry('AE');
   let objAF = new ObjectCountry('AF');
@@ -67,3 +67,4 @@
   console.log(objAE);// вывод объекта страны  
   
   })()
+  
